@@ -6,9 +6,20 @@
 	<script src="static/index.js"></script>
 	</head>
 	<body onload="load()">
-		<div id="chat"></div>
-		Message:
-		<input type="text" id="message" />
-		<input type="button" value="Send" onclick="sendMessage()" />
+		<div id="login">
+			Username:
+			<input type="text" id="username" />
+			<input type="button" value="Login" onclick="userLogin()" />
+		</div>
+
+		<div id="main" style="display: none">
+			<b>Chat:</b>
+			<div id="chat"></div>
+			<br />
+
+			Message:
+			<input type="text" id="message" />
+			<input type="button" value="Send" onclick="sendMessage()" />
+		</div>
 	</body>
 </html>
