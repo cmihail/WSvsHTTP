@@ -62,6 +62,7 @@ overhead, as both nodes need to mimic this channel that require states.
 Bi-directional channels are necessary for web applications, like chat, games,
 video calls, where a lot of data is transmitted in both directions.
 \\
+\indent
 The most popular solutions used by AJAX are: polling, where a client sends
 a request to a server at regular intervals and the server responses immediately
 and closes the connection; long-polling, where the client sends a request to the
@@ -75,15 +76,17 @@ created, which is a common case for polling and long-polling. If a lot of small 
 is sent, as in the case of chat application, this overhead might be to much compared
 to the data (\textbf{add reference in bibliography \cite{1}}).
 \\
+\indent
 In order to overcome to limitations of AJAX based solutions, WebSockets were created.
 This is a new technology based on HTTP (\textbf{add RFC reference in bibliography \cite{2}}).
 HTTP was chosen as a base because most firewalls allow HTTP and HTTPS traffic 
-ports 80 and 443), while other ports' traffic might be blocked. Though it's based on
+(ports 80 and 443), while other ports' traffic might be blocked. Though it's based on
 HTTP, it doesn't inherit its limitations. HTTP is used only for creating and
 closing the connection between client and server, and not the connection itself.
 The distinction between normal HTTP traffic and WebSockets is done through the
 "Upgrade: websocket"/"Connection: Upgrade" headers (\textbf{RFC reference \cite{2}}).
 \\
+\indent
 Just as mentioned above, Websockets is a new technology created recently
 (the RFC was written in 2011), so it isn't very well tested. This can be
 considered one of the minuses compared to AJAX, which is better tested.
@@ -96,10 +99,40 @@ a testing platform, which should be independent of Operating System and devices.
 It should work for both laptops and smartphones, for Windows and Linux and
 other devices and Operating Systems.
 
-\hfill Octomber 22, 2013
-
 \section{Related work}
-
+\textit{Real-time Monitoring using AJAX and WebSockets} paper (\textbf{create reference})
+exemplifies the differences in terms of performance between AJAX and WebSockets.
+The authors added real-time monitoring support for OASIS (\textbf{maybe reference}),
+an open-source real-time instrumentation middleware for distributed real-time
+and embedded systems. The collected instrumentation data was sent over the Web
+using AJAX and WebSockets and the results were compared. The WebSockets server
+consumes 50% less network bandwidth then the AJAX server. Also the WebSockets
+client consumes memory at a constant rate, while the AJAX client consumes it
+at an increasing rate and Websockets can send up to 215.44% more data sample
+than AJAX by using the same amount of network bandwidth.
+\\
+\indent
+Another example where WebSockets are better than AJAX is the case of sending
+small data per frame. When WebSockets exchange 2B of data per frame, continuous
+polling with AJAX exchange up to 8 KB of HTTP header (\textbf{create reference}).
+\\
+\indent
+Even though WebSockets are better than AJAX based solutions, it's still not as
+good as raw TCP sockets. \textit{Real-time Web Application Roadblock:
+Performance Penalty of HTML Sockets} paper (\textbf{create reference}) discusses
+the penalties of using HTML socket streams (long-polling and WebSockets)
+vs TCP streams. HTML socket streams can have up to 5x protocol overhead, up to
+3x more payload delivery delay and up to 3x less throughput. In case of small
+data payload (a few hundreds of bytes), the performance between the 2 is
+pretty high. Also TCP streams a behave better over 3G than HTML socket streams.
+One reason for the poorer performance is given by the fact that the browser uses
+buffering for HTML socket streams (both long-polling and WebSockets), introducing
+delays, while TCP sockets cand send the data directly. But on the good side for
+WebSockets, the paper mentions that they behave better than long-polling when
+it comes to sending small-size chunks, making it a better choice for chat,
+voip, online games, etc, just like TCP streams. As a big plus for HTML sockets
+compared to TCP streams is the fact that the data send with them can pass over
+firewalls and most proxies, as HTTP and HTTPS are usually not blocked.
 
 \bibliography{bare_conf}{}
 \bibliographystyle{unsrt}
