@@ -1,10 +1,7 @@
 \documentclass[conference]{IEEEtran}
 
-\ifCLASSINFOpdf
-  \usepackage[pdftex]{graphicx}
-\else
-  \usepackage[dvips]{graphicx}
-\fi
+\usepackage{svg}
+
 
 \hyphenation{op-tical net-works semi-conduc-tor}
 
@@ -111,6 +108,13 @@ client consumes memory at a constant rate, while the AJAX client consumes it
 at an increasing rate and Websockets can send up to 215.44% more data sample
 than AJAX by using the same amount of network bandwidth.
 \\
+\begin{frame}{}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{Architecture.png}
+    \caption{Performance application architecture}
+  \end{figure}
+\end{frame}
 \indent
 Another example where WebSockets are better than AJAX is the case of sending
 small data per frame. When WebSockets exchange 2B of data per frame, continuous
@@ -133,6 +137,21 @@ it comes to sending small-size chunks, making it a better choice for chat,
 voip, online games, etc, just like TCP streams. As a big plus for HTML sockets
 compared to TCP streams is the fact that the data send with them can pass over
 firewalls and most proxies, as HTTP and HTTPS are usually not blocked.
+
+\section{Architecture}
+This section proposes a simple architecture for an application that must test
+the performance of WebSockets and AJAX implementations of bi-directional
+communication. Figure 1 contains the architecture and the layers. In order to
+test the performance automatically, the application should be able to generate
+tests based on a given input and automatically measure how those tests behave
+on a given platform. The design should promote easy porting to other devices
+and Operating Systems. It should have a layer independent of the platform and
+of the implementation of either WebSockets or AJAX. The layer provides a generic
+API that is used by the tests generator component and the tracer or measurements
+component. The API and the previously mentioned components are going to be ported
+to other platforms with minimal changes. The layer that provides the API is going
+to be implemented by every platform in a different ways that depends on the
+Operating System, how the WebSockets API looks, etc.
 
 \bibliography{bare_conf}{}
 \bibliographystyle{unsrt}
