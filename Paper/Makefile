@@ -8,7 +8,7 @@ BIBTEX = bibtex
 
 all: $(PDF)
 
-$(PDF): $(TEX) $(R_PLOT)
+$(PDF): $(TEX)
 	$(PDFLATEX) $(BASENAME)
 	$(BIBTEX) $(BASENAME)
 	$(PDFLATEX) $(BASENAME)
