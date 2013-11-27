@@ -79,9 +79,9 @@ the data that is actually transmitted \cite{2009:Misc}.
 \\
 \indent
 In order to overcome the limitations of AJAX-based solutions, the HTTP-based
-WebSocket protocol was created \cite{RFC}. HTTP was chosen as a base because
+WebSockets protocol was created \cite{RFC}. HTTP was chosen as a base because
 most firewalls allow HTTP and HTTPS traffic  (ports 80 and 443), while other
-ports' traffic might be blocked. Although based on HTTP, WebSocket does not
+ports' traffic might be blocked. Although based on HTTP, WebSockets do not
 inherit its limitations. HTTP is only used to create and close the connection
 between client and server, while the in-between information exchage is done
 through a series of WebSocket-specific data frames. The distinction between
@@ -89,14 +89,14 @@ normal HTTP traffic and WebSockets is done through the "Upgrade: websocket" /
 "Connection: Upgrade" headers \cite{RFC}.
 \\
 \indent
-As mentioned above, WebSocket is a recently created technology 
+As mentioned above, WebSockets are a recently created technology 
 (the RFC was written in 2011), so it has not been thoroughly tested. This may
 very well be considered a downside when compared to AJAX, which benefits from
 years of testing and industry usage. Although a series of testing platforms
-with the purpose of validating WebSocket implementations have been created,
+with the purpose of validating WebSockets implementations have been created,
 like Autobahn \cite{Autobahn}, to our best knowledge, we have yet to find any
 performance-oriented testing platforms for a given WebSocket implementation.
-This paper compares AJAX with WebSocket and proposes an architecture for
+This paper compares AJAX with WebSockets and proposes an architecture for
 a testing platform, which should be independent of the underlying Operating
 System and present devices. It should work for both laptops and smartphones,
 for Windows and Linux and other devices and Operating Systems.
@@ -110,7 +110,7 @@ and embedded systems. The collected instrumentation data was sent over the Web
 using AJAX and WebSockets and the results were compared. The WebSockets server
 consumes 50\% less network bandwidth then the AJAX server. Also, the WebSocket
 client consumes memory at a constant rate, while the AJAX client consumes it
-at an increasing rate. Furthermore, the Websocket-oriented implementation can
+at an increasing rate. Furthermore, the WebSockets-oriented implementation can
 send up to 215.44\% more data samples than the AJAX-based counterpart although
 demanding the same amount of network bandwidth.
 \\
