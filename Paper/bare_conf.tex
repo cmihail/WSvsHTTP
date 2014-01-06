@@ -25,8 +25,8 @@ Email: liviu.chircu@gmail.com}}
 \maketitle
 
 \begin{abstract}
-Current web applications' solutions for bi-directional communication are based
-on AJAX. Even though they are well documented solutions that are backed up by
+Current web applications' solutions for bi-directional communication are widely
+based on AJAX. Even though they are well documented solutions that are backed up by
 years of utilization, they have limitations imposed by the HTTP protocol. HTTP
 is a stateless protocol that requires each connection to be treated as a new
 connection, requiring an unnecessary overhead to communicate in both directions.
@@ -57,7 +57,7 @@ through a series of methods which impose a significant amount of overhead, as bo
 nodes need to mimic this channel that require states.
 Bi-directional channels are necessary for web applications such as instant
 messaging clients, browser-based games, video calls, etc., where large amounts
-of HTTP traffic (with complete sets of headers and message bodies) are sent from
+of traffic (with complete sets of headers and message bodies) need to be sent from
 each endpoint over to the opposite one.
 \\
 \indent
@@ -90,7 +90,8 @@ normal HTTP traffic and WebSockets is done through the "Upgrade: websocket" /
 \\
 \indent
 As mentioned above, WebSockets are a recently created technology 
-(the RFC was written in 2011), so it has not been thoroughly tested. This may
+(the RFC was written in 2011), so they are not supported by all major
+web servers, let alone being extensively tested. This may
 very well be considered a downside when compared to AJAX, which benefits from
 years of testing and industry usage. Although a series of testing platforms
 with the purpose of validating WebSockets implementations have been created,
@@ -102,7 +103,7 @@ System and present devices. It should work for both laptops and smartphones,
 for Windows and Linux and other devices and Operating Systems.
 
 \section{Related work}
-\textit{Real-time Monitoring using AJAX and WebSockets} paper \cite{RT-Monitoring}
+\textit{Real-time Monitoring using AJAX and WebSockets} \cite{RT-Monitoring}
 exemplifies the differences in terms of performance between AJAX and WebSockets.
 The authors added real-time monitoring support for OASIS \cite{OASIS},
 an open-source real-time instrumentation middleware for distributed real-time
