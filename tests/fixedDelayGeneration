@@ -1,0 +1,8 @@
+#!/bin/sh
+
+LIMIT=3400
+for step in `seq 0 4 $LIMIT`; do
+	./generateClients.sh 4
+	echo $step
+	sleep 1
+done
