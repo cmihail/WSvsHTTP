@@ -60,7 +60,7 @@ messaging clients, browser-based games, video calls, etc., where large amounts
 of traffic (with complete sets of headers and message bodies) need to be sent from
 each endpoint over to the opposite one.
 \\
-\indent
+
 The most popular solutions used by AJAX are: \textbf{polling}, where a client sends
 a request to a server at regular intervals with the server responding immediately
 and closing the connection; \textbf{long-polling}, where the client requests
@@ -77,7 +77,7 @@ a great amount of small pieces of data are to be sent, as in the case of a
 web-based chat application, the overhead of the headers might actually overweigh
 the data that is actually transmitted \cite{2009:Misc}.
 \\
-\indent
+
 In order to overcome the limitations of AJAX-based solutions, the HTTP-based
 WebSockets protocol was created \cite{RFC}. HTTP was chosen as a base because
 most firewalls allow HTTP and HTTPS traffic  (ports 80 and 443), while other
@@ -88,7 +88,7 @@ through a series of WebSocket-specific data frames. The distinction between
 normal HTTP traffic and WebSockets is done through the "Upgrade: websocket" /
 "Connection: Upgrade" headers \cite{RFC}.
 \\
-\indent
+
 As mentioned above, WebSockets are a recently created technology 
 (the RFC was written in 2011), so they are not supported by all major
 web servers, let alone being extensively tested. This may
@@ -101,6 +101,7 @@ This paper compares AJAX with WebSockets and proposes an architecture for
 a testing platform, which should be independent of the underlying Operating
 System and present devices. It should work for both laptops and smartphones,
 for Windows and Linux and other devices and Operating Systems.
+\vfill\eject
 
 \section{Related work}
 \textit{Real-time Monitoring using AJAX and WebSockets} \cite{RT-Monitoring}
@@ -115,7 +116,7 @@ at an increasing rate. Furthermore, the WebSockets-oriented implementation can
 send up to 215.44\% more data samples than the AJAX-based counterpart although
 demanding the same amount of network bandwidth.
 \\
-\indent
+
 Even though WebSockets are better than AJAX based solutions, it's still not as
 good as raw TCP sockets. \textit{Real-time Web Application Roadblock:
 Performance Penalty of HTML Sockets} paper \cite{Performance-Penalty} discusses
@@ -134,33 +135,28 @@ it comes to sending small-sized chunks, making it a better choice for chat,
 VoIP, online games, etc, just like TCP streams. A big plus for HTML sockets
 over TCP streams is the fact that the data sent through them can pass over
 firewalls and most proxies, as HTTP and HTTPS are commonly allowed ports.
+\\
 
 Another example where WebSockets are better than AJAX is the case of sending
 small data per frame. While WebSockets exchange 2B of data per frame, continuous
 polling with AJAX exchange up to 8 KB of HTTP header \cite{2009:Misc}.
+\\
 
 \section{Evaluating existing WebSocket implementations}
 In order to get a better idea about how different WebSockets implementations
 behave and how the architecture of the testing application should be designed, a
-series of tests were performed on two different Node.js WebSocket implementations.
+series of tests were performed on two different Node.js \cite{nodejs} WebSocket
+implementations.
+\\
 
 The chosen implementations are \textbf{ws} \cite{nodejs-ws}
-and \textbf{WebSocket-Node} \cite{nodejs-websocket}, both part of Node.js
-\cite{nodejs}. The tests were performed on an Intel Core i7-4770 with 16GB of
-RAM running on Ubuntu 13.10, 64-bit. As a measuring tool we have used the
-\textit{Look} performance profiler for Node.js \cite{nodejs-look}, which offered
-information about the process's CPU time, RSS (Resident Set Size), V8 heap total
-\cite{javascript-v8}, V8 heap used, and OS load average.
-\indent
-We have tested 4 different scenarios:
-
-1. Connected 4 clients simultaneously every second until 3400 connections were reached.
-All connections are kept alive during the entire run and transferred data is negligible
-(a single number). Figure X (TODO) contains the comparison between the two WebSockets
-implementations. We can observe that \textbf{ws} has a better CPU usage when handling
-fewer connections than \textbf{WebSocket-Node}, but towards the end they behave almost
-similar. The memory consumption of the two is also similar.
-\\
+and \textbf{WebSocket-Node} \cite{nodejs-websocket}, both part of Node.js. The
+tests were performed on an Intel Core i7-4770 with 16GB of RAM running on Ubuntu
+13.10, 64-bit. As a measuring tool we have used the \textit{Look} performance
+profiler for Node.js \cite{nodejs-look}, which offered information about the
+process's CPU time, RSS (Resident Set Size), V8 heap total, V8 heap used, and
+OS memory and load average. We have displayed only CPU time and RSS because we
+considered them to be the most relevant, but all tests can be found at \cite{tests}.
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -168,16 +164,25 @@ similar. The memory consumption of the two is also similar.
     \caption{Test 1 - Constant Flow of Incoming Connections}
   \end{figure}
 \end{frame}
+\\
+
+We have tested 4 different scenarios:
+\\
+
+1. Connected 4 clients simultaneously every second until 3400 connections were reached.
+All connections are kept alive during the entire run and transferred data is negligible
+(a single number). Figure 1 contains the comparison between the two WebSockets
+implementations. We can observe that \textbf{ws} has a better CPU usage when handling
+fewer connections than \textbf{WebSocket-Node}, but towards the end they behave almost
+similar. The memory consumption of the two is similar.
+\\
 
 2. Connected 600 clients simultaneously once every 120 seconds. All connections are
 kept alive during the entire run and transferred data is negligible (a single number).
-Figure X (TODO) contains the comparison between the two websockets implementations.
+Figure 2 contains the comparison between the two websockets implementations.
 Following the conclusions of the first example, memory consumption is similar and
 \textbf{ws} is faster than \textbf{WebSocket-Node}, but under extremely heavy weight,
-the system freezes faster for \textbf{ws}. We were able to go only up to 3600 connections
-with \textbf{ws}, while \textbf{WebSocket-Node} peaked at 4200 connections.
-\\
-\clearpage
+the system freezes faster for \textbf{ws}. We were able to go only up to 3600 connections with \textbf{ws}, while \textbf{WebSocket-Node} peaked at 4200 connections.
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -185,19 +190,18 @@ with \textbf{ws}, while \textbf{WebSocket-Node} peaked at 4200 connections.
     \caption{Test 2 - Bursts of Incoming Connections}
   \end{figure}
 \end{frame}
-
+\\
 
 3. Simultaneously connected 100 clients right away, which exchanged data with
-sizes ranging from 2KB up to 1MB, with increments of 2KB/s per client. All
+sizes ranging from 2KB up to 1MB and increments of 2KB/s per client. All
 connections were kept alive during the entire run, and no extra clients were
-added. Clients simply send more data with every second. Figure X (TODO)
-contains the comparison between the two WebSockets implementations. In this
-example we can clearly see that \textbf{WebSocket-Node} behaves better when
+added. Clients simply send more data with every second. Figure 3 contains
+the comparison between the two WebSockets implementations. In this example
+we can clearly see that \textbf{WebSocket-Node} behaves better when
 sending large packets. At almost 1MB / packet, \textbf{WebSocket-Node}
 processes everything in under 2s, but \textbf{ws} requires up to 6s. Also
-we had to stop \textbf{ws} before 1MB / packet because the system almost freezed,
-while the other implementation allowed us to let it reach its limit.
-\\
+we had to stop \textbf{ws} before 1MB / packet because the system almost
+freezed, while the other implementation allowed us to let it reach its limit.
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -206,19 +210,17 @@ while the other implementation allowed us to let it reach its limit.
 	         Fixed Number of Clients}
   \end{figure}
 \end{frame}
+\\
 
 4. Simultaneously connected 400 clients, then closed their connections after 10
 seconds. Once every 90 seconds, 200 clients would be added to the prior number
-of clients, and the first steps would be repeated.
-The process continued until 2800 connections
-were reached. Transferred data was negligible (a single number). Figure X (TODO)
-contains the comparison between the two websockets implementations. In this
-example the used memory is similar, but the \textbf{ws} implementation has
+of clients, and the first steps would be repeated. The process continued until 2800 connections were reached. Transferred data was negligible (a single number).
+Figure 4 contains the comparison between the two websockets implementations. In
+this example the used memory is similar, but the \textbf{ws} implementation has
 bigger peaks for CPU usage than \textbf{WebSocket-Node} when it comes to the
-last few iterations, where large numbers of connections must be managed
-(more than 2200). For small numbers of connections, both implementations behave
-similar.
-\\
+last few iterations, where large numbers of connections must be managed (more
+than 2200 connections). For small numbers of connections, both implementations
+behave similar.
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -226,6 +228,7 @@ similar.
     \caption{Test 4 - Linearly Increasing Number of Simultaneous Connections}
   \end{figure}
 \end{frame}
+\\
 
 % FIXME: Conclusions subtitle?
 We arrived at the conclusion that \textbf{ws} is faster than
@@ -244,7 +247,7 @@ proxies, together with the necessary client implementation needed in order to
 perform the eventual stress tests.
 
 \subsection{The Generic API Approach}
-Figure 1 contains the architecture for the first proposal, structured into layers.
+Figure 5 contains the architecture for the first proposal, structured into layers.
 In order to test the performance automatically, the application should be able
 to generate tests based on a given input and automatically measure how these tests
 behave on a given platform. The design should promote easy porting to other devices
@@ -255,7 +258,6 @@ component. The API and the previously mentioned components are going to be porte
 to other platforms with minimal changes. The layer that provides the API is going
 to be implemented by every platform in a different way, depending on the
 Operating System, specific WebSockets API requirements, etc.
-\\
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -263,10 +265,10 @@ Operating System, specific WebSockets API requirements, etc.
     \caption{Testing Framework Based on a Generic API}
   \end{figure}
 \end{frame}
-\indent
+\\
 
 \subsection{The Platform-Dependent Alternative}
-Figure 2 shows the alternate architecture. It includes a tool used to extract
+Figure 6 shows the alternate architecture. It includes a tool used to extract
 information about running processes (the \textbf{tracer}), and other applications
 required in order to run a series of stress tests (i.e. HTTP clients, WebSocket
 clients). By design, the \textbf{tracer} will be platform-dependent, due to the
@@ -277,7 +279,6 @@ traffic statistics should require escalated privileges on most platforms. Howeve
 on the bright side, working with a "black box" structured testing framework is
 much more easier for a potential user intending to evaluate the directions into
 which his web platform may be built.
-\\
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -285,7 +286,7 @@ which his web platform may be built.
     \caption{Testing Framework Based on a Process Monitoring Application}
   \end{figure}
 \end{frame}
-\indent
+\\
 
 \section{Conclusions and Future Work}
 Starting with research on WebSockets and their potential in the web application
@@ -298,6 +299,7 @@ flexibility, uniformity between different platforms with the downside of coming 
 the form of a library, rather than an independent application. The other is much
 more straight-forward, as its main purpose is to generate testing results as fast
 as possible, while losing some testing flexibility.
+\\
 
 We feel that the performance comparison framework is likely to become very popular
 if properly written. Effectively seeing the benefits of switching to WebSockets
