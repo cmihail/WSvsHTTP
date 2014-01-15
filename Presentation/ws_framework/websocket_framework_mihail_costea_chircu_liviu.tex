@@ -8,7 +8,7 @@
 \usepackage{listings}
 \usepackage[absolute,overlay]{textpos}
 
-\title[Performance of Web Protocols]{Comparative Analysis of Performance Using
+\title[Performance Evaluation Framework]{Comparative Analysis of Performance Using
 Server-Client Protocols}
 \subtitle{Mihail Costea \& Liviu Chircu (\textit{The Penguins})}
 \date{15 Jauary 2013}
@@ -52,10 +52,10 @@ Server-Client Protocols}
 \end{frame}
 
 % Slide 6
-\section{The "Tests Generator"}
+\section{The "Test Generator"}
 
 % Slide 7
-\begin{frame}{The "Tests Generator"}
+\begin{frame}{The "Test Generator"}
   \begin{itemize}
     \item Architectural goals:
       \begin{itemize}
@@ -73,7 +73,7 @@ Server-Client Protocols}
 \end{frame}
 
 % Slide 8
-\begin{frame}{The "Tests Generator"}
+\begin{frame}{The "Test Generator"}
   \begin{itemize}
     \item Testing scenarios included:
       \begin{itemize}
@@ -87,7 +87,10 @@ Server-Client Protocols}
 \end{frame}
 
 % Slide 9
-\begin{frame}{Putting the "Tests Generator" to work}
+\section{Comparison of ws and WebSocket-Node}
+
+% Slide 10
+\begin{frame}{"Test Generator" results}
   \begin{columns}
     \begin{column}[l]{0.45\textwidth}
       \begin{center}
@@ -99,19 +102,51 @@ Server-Client Protocols}
     \end{column}
     \begin{column}[l]{0.45\textwidth}
       \begin{center}
+        Testing Scenario 2
+      \end{center}
+      \begin{figure}
+         \includegraphics[scale=0.18]{img/test2v2.png}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% Slide 11
+\begin{frame}{"Test Generator" results}
+  \begin{columns}
+    \begin{column}[l]{0.45\textwidth}
+      \begin{center}
         Testing Scenario 3
       \end{center}
       \begin{figure}
          \includegraphics[scale=0.18]{img/test3v2.png}
       \end{figure}
     \end{column}
+    \begin{column}[l]{0.45\textwidth}
+      \begin{center}
+        Testing Scenario 4
+      \end{center}
+      \begin{figure}
+         \includegraphics[scale=0.18]{img/test4v2.png}
+      \end{figure}
+    \end{column}
   \end{columns}
 \end{frame}
 
-% Slide 10
+% Slide 12
+\begin{frame}{Testing Conclusions}
+  \begin{itemize}
+    \item relatively equal performance with fewer connections and small data
+      frames (slighty better results for \textbf{ws})
+    \item \textbf{WebSocket-Node} scales much better both with number of
+      connections and frame size
+  \end{itemize}
+\end{frame}
+
+% Slide 13
 \section{Updated Architecture Proposal}
 
-% Slide 11
+% Slide 14
 \begin{frame}{The Alternate Design}
   \begin{itemize}
     \item Core ideas:
@@ -126,6 +161,22 @@ Server-Client Protocols}
   \end{itemize}
 \end{frame}
 
+% Slide 15
+\section{Conclusions and Future Work}
+
+% Slide 16
+\begin{frame}{Conclusions and Future Work}
+  \begin{itemize}
+    \item two architectural proposals
+      \begin{itemize}
+        \item one is more flexible, but comes in the form of a library
+        \item the other is a fully independent app which offers quick results
+      \end{itemize}
+    \item very likely to become a popular choice in this field
+  \end{itemize}
+\end{frame}
+
+% Slide 17
 \begin{frame}{Other resources}
   \begin{itemize}
     \item [1] Anthony T. Holdener, III. Ajax: The Definitive Guide
@@ -139,6 +190,7 @@ Server-Client Protocols}
   \end{itemize}
 \end{frame}
 
+% Slide 18
 \section{Questions}
 
 \end{document}
