@@ -10,17 +10,10 @@
 
 \title{Comparative Analysis of Performance Using Server-Client Protocols}
 
-\author{\IEEEauthorblockN{Mihail Costea}
+\author{\IEEEauthorblockN{Mihail Costea, Liviu Chircu}
 \IEEEauthorblockA{University Politehnica of Bucharest\\
-The Faculty of Automatic Control and Computers\\
-Bucharest, Romania\\
-Email: mihail.costea90@gmail.com}
-\and
-\IEEEauthorblockN{Liviu Chircu}
-\IEEEauthorblockA{University Politehnica of Bucharest\\
-The Faculty of Automatic Control and Computers\\
-Bucharest, Romania\\
-Email: liviu.chircu@gmail.com}}
+Faculty of Automatic Control and Computer Science\\
+Emails: mihail.costea90@gmail.com, liviu.chircu@gmail.com}}
 
 \maketitle
 
@@ -37,7 +30,8 @@ overhead imposed by connection establishment.
 \indent
 This paper proposes to exemplify the advantages and disadvantages between
 traditional HTTP implementations for bi-directional communication based on AJAX
-and WebSockets. It also proposes an architecture for a testing platform for
+and WebSockets. It also presents the comparison of 2 WebSockets implementations,
+and based on the results proposes an architecture for a testing platform of
 different WebSockets implementations.
 \end{abstract}
 
@@ -89,43 +83,47 @@ normal HTTP traffic and WebSockets is done through the "Upgrade: websocket" /
 "Connection: Upgrade" headers \cite{RFC}.
 \\
 
-As mentioned above, WebSockets are a recently created technology 
-(the RFC was written in 2011), so they are not supported by all major
-web servers, let alone being extensively tested. This may
-very well be considered a downside when compared to AJAX, which benefits from
-years of testing and industry usage. Although a series of testing platforms
-with the purpose of validating WebSockets implementations have been created,
-like Autobahn \cite{Autobahn}, to our best knowledge, we have yet to find any
-performance-oriented testing platforms for a given WebSockets implementation.
-This paper compares AJAX with WebSockets and proposes an architecture for
-a testing platform, which should be independent of the underlying Operating
+As mentioned above, WebSockets are a recently created technology  (the RFC was
+written in 2011), so they are not supported by all major web servers, let alone
+being extensively tested. This may very well be considered a downside when
+compared to AJAX, which benefits from years of testing and industry usage.
+Although a series of testing platforms with the purpose of validating WebSockets
+implementations have been created, like Autobahn \cite{Autobahn}, to our best
+knowledge, we have yet to find any performance-oriented testing platforms for a
+given WebSockets implementation.
+\\
+
+This paper compares AJAX with WebSockets and 2 WebSockets implementations based
+on Node.js. Based on the comparision results, it proposes 2 different architectures
+for testing platforms. One should be independent of the underlying Operating
 System and present devices. It should work for both laptops and smartphones,
-for Windows and Linux and other devices and Operating Systems.
+for Windows and Linux and other devices and Operating Systems. The other one is
+platform dependent, but it could be used for testing not only how the WebSockets
+behave in general, but also specific applications based on WebSockets.
 \vfill\eject
 
 \section{Related work}
-\textit{Real-time Monitoring using AJAX and WebSockets} \cite{RT-Monitoring}
-exemplifies the differences in terms of performance between AJAX and WebSockets.
-The authors added real-time monitoring support for OASIS \cite{OASIS},
-an open-source real-time instrumentation middleware for distributed real-time
-and embedded systems. The collected instrumentation data was sent over the Web
-using AJAX and WebSockets and the results were compared. The WebSockets server
-consumes 50\% less network bandwidth than the AJAX server. Also, the WebSockets
-client consumes memory at a constant rate, while the AJAX client consumes it
-at an increasing rate. Furthermore, the WebSockets-oriented implementation can
-send up to 215.44\% more data samples than the AJAX-based counterpart although
-demanding the same amount of network bandwidth.
+Puranik et al. \cite{RT-Monitoring} exemplifies the differences in terms of
+performance between AJAX and WebSockets. The authors added real-time monitoring
+support for OASIS \cite{OASIS}, an open-source real-time instrumentation
+middleware for distributed real-time and embedded systems. The collected
+instrumentation data was sent over the Web using AJAX and WebSockets and the
+results were compared. The WebSockets server consumes 50\% less network
+bandwidth than the AJAX server. Also, the WebSockets client consumes memory at
+a constant rate, while the AJAX client consumes it at an increasing rate.
+Furthermore, the WebSockets-oriented implementation can send up to 215.44\%
+more data samples than the AJAX-based counterpart although demanding the same
+amount of network bandwidth.
 \\
 
-Even though WebSockets are better than AJAX based solutions, it's still not as
-good as raw TCP sockets. \textit{Real-time Web Application Roadblock:
-Performance Penalty of HTML Sockets} paper \cite{Performance-Penalty} discusses
-the penalties of using HTML socket streams (long-polling and WebSockets)
-versus TCP streams. HTML socket streams can have up to 5x protocol overhead, up to
+Even though WebSockets are better than AJAX based solutions, they are still
+not as good as raw TCP sockets. Agarwal \cite{Performance-Penalty} discusses
+the penalties of using HTML socket streams (long-polling and WebSockets) versus
+TCP streams. HTML socket streams can have up to 5x protocol overhead, up to
 3x more payload delivery delay and up to 3x less throughput. In case of small
-data payload (a few hundreds of bytes), the performance between the two becomes
-significantly noticeable. Also TCP streams tend to behave better over 3G than
-HTML socket streams.
+data payload (a few hundreds of bytes), the performance difference between the
+two becomes significantly noticeable. Also TCP streams tend to behave better
+over 3G than HTML socket streams.
 One reason for the poorer performance is due to the fact that the browser uses
 buffering for HTML socket streams (both long-polling and WebSockets), thus 
 introducing delays, while TCP sockets are able to send the data directly.
@@ -174,7 +172,7 @@ All connections are kept alive during the entire run and transferred data is neg
 (a single number). Figure 1 contains the comparison between the two WebSockets
 implementations. We can observe that \textbf{ws} has a better CPU usage when handling
 fewer connections than \textbf{WebSocket-Node}, but towards the end they behave almost
-similar. The memory consumption of the two is similar.
+similarly. The memory consumption of the two is behaves similarly.
 \\
 
 2. Connected 600 clients simultaneously once every 120 seconds. All connections are
@@ -247,42 +245,49 @@ proxies, together with the necessary client implementation needed in order to
 perform the eventual stress tests.
 
 \subsection{The Generic API Approach}
-Figure 5 contains the architecture for the first proposal, structured into layers.
-In order to test the performance automatically, the application should be able
-to generate tests based on a given input and automatically measure how these tests
-behave on a given platform. The design should promote easy porting to other devices
-and Operating Systems. It should have a layer which is independent of 
-platform and implementation (either WebSockets or AJAX). The layer provides a generic
-API that is used by the tests generator component and the tracer or measurements
-component. The API and the previously mentioned components are going to be ported
-to other platforms with minimal changes. The layer that provides the API is going
-to be implemented by every platform in a different way, depending on the
-Operating System, specific WebSockets API requirements, etc.
+Figure 5 contains the architecture for the first proposal, structured into
+layers. In order to test the performance automatically, the application should
+be able to generate tests based on a given input and automatically measure how
+these tests behave on a given platform. The design should promote easy porting
+to other devices and Operating Systems. It should have a layer which is dependent
+of platform and implementation. This layer is the base of a generic API that is
+used by the tests generator component, the server application which communicates
+directly with the tests generator, and the tracer used to gather information
+about the WebSockets behavior inside the server. The API and the previously
+mentioned components are going to be ported to other platforms with minimal
+changes. The layer that provides the API is going to be implemented by every
+platform in a different way, depending on the Operating System, specific
+WebSockets API requirements, etc.
 \begin{frame}{}
   \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{img/architecture.png}
+    \includegraphics[width=0.45\textwidth]{img/architecture1.png}
     \caption{Testing Framework Based on a Generic API}
   \end{figure}
 \end{frame}
 \\
 
 \subsection{The Platform-Dependent Alternative}
-Figure 6 shows the alternate architecture. It includes a tool used to extract
-information about running processes (the \textbf{tracer}), and other applications
-required in order to run a series of stress tests (i.e. HTTP clients, WebSocket
-clients). By design, the \textbf{tracer} will be platform-dependent, due to the
-lack of an unified API which gathers runtime process statistics between different
-operating systems. Another possible downside to keep in mind are the required
-privileges in order to run the testing framework, because inspecting network
-traffic statistics should require escalated privileges on most platforms. However,
-on the bright side, working with a "black box" structured testing framework is
-much more easier for a potential user intending to evaluate the directions into
-which his web platform may be built.
+Figure 6 shows the alternate architecture. Just as before we have a server
+application and tests generator component that communicate directly. The tests
+generator creates stress tests based on a user defined input, similar to Unix
+commands. Similarly to first architecture, the tracer gathers information about
+the WebSockets behavior used by the server. But, while in the first case the
+tracer is a separate component that can gather information independently from
+the server due to the generic API, in the current architecture the tracer is
+a library used by the server directly, similarly to look \cite{nodejs-look}.
+As a plus, this offers the possibility to use the tracer in other server
+applications that are not created only for testing WebSockets implementations
+in general, but also test the behavior of specific servers that might be used
+in production and are based on WebSockets. But this comes of the cost of
+portability. For every new programming language, OS or device, the platform
+dependent tool and server application need to be written from scratch. The
+tests generator doesn't suffer from this problem because it acts as a client
+for the server and it will always use the same protocol for communication.
 \begin{frame}{}
   \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{img/architecture2.pdf}
+    \includegraphics[width=0.5\textwidth]{img/architecture2.png}
     \caption{Testing Framework Based on a Process Monitoring Application}
   \end{figure}
 \end{frame}
@@ -294,11 +299,19 @@ industry, we continued with a performance evaluation of a couple of existing
 WebSockets implementations. Having determined the WebSockets performance caps,
 we were able to propose two possibilities of designing a framework capable of
 profiling existing web servers and evaluate the benefits of switching to the new 
-connection-oriented WebSockets protocol. One architecture promotes profiling
-flexibility, uniformity between different platforms with the downside of coming in
-the form of a library, rather than an independent application. The other is much
-more straight-forward, as its main purpose is to generate testing results as fast
-as possible, while losing some testing flexibility.
+connection-oriented WebSockets protocol. One architecture promotes easy porting
+to new platforms and WebSockets implementations, with the downside that it will
+take initially more time to implement, and can be used only for generic testing.
+The other is much more straight-forward, as its main purpose is to generate
+testing results as fast as possible and maybe be used by applications created
+for production, but it comes at the cost of harder porting to other platforms.
+\\
+
+As a future work, we can extend the comparative analysis to other WebSockets
+implementations, like \textbf{socket.io} \cite{socket.io}, \textbf{SockJS}
+\cite{SockJS} or \textbf{Engine.IO} \cite{Engine.IO}. This comparisons might
+give us better insights about which testing architecture we should choose and
+how we should implement it, or maybe create a better architecture.
 \\
 
 We feel that the performance comparison framework is likely to become very popular
