@@ -17,4 +17,4 @@ $(PDF): $(TEX)
 	mv $(PDF) $(OUTPUT_PDF)
 
 clean:
-	-rm -f $(PDF) $(addsuffix .aux, $(BASENAME)) $(addsuffix .log, $(BASENAME)) $(addsuffix .bbl, $(BASENAME)) $(addsuffix .blg, $(BASENAME)) $(addsuffix .blg, $(BASENAME)) 
+	-rm -f $(PDF) $(addsuffix .aux, $(BASENAME)) $(addsuffix .log, $(BASENAME)) $(addsuffix .bbl, $(BASENAME)) $(addsuffix .blg, $(BASENAME)) $(addsuffix .blg, $(BASENAME))
