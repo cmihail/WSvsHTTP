@@ -30,9 +30,9 @@ overhead imposed by connection establishment.
 \indent
 This paper proposes to exemplify the advantages and disadvantages between
 traditional HTTP implementations for bi-directional communication based on AJAX
-and WebSockets. It also presents the comparison of 2 WebSockets implementations,
-and based on the results proposes an architecture for a testing platform of
-different WebSockets implementations.
+and WebSockets. It also presents the comparison of two WebSockets
+implementations, and proposes an architecture for a testing platform of
+different WebSockets implementations based on the obtained results.
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -88,18 +88,21 @@ written in 2011), so they are not supported by all major web servers, let alone
 being extensively tested. This may very well be considered a downside when
 compared to AJAX, which benefits from years of testing and industry usage.
 Although a series of testing platforms with the purpose of validating WebSockets
-implementations have been created, like Autobahn \cite{Autobahn}, to our best
+implementations have been created, such as Autobahn \cite{Autobahn}, to our best
 knowledge, we have yet to find any performance-oriented testing platforms for a
 given WebSockets implementation.
 \\
 
-This paper compares AJAX with WebSockets and 2 WebSockets implementations based
-on Node.js. Based on the comparision results, it proposes 2 different architectures
-for testing platforms. One should be independent of the underlying Operating
-System and present devices. It should work for both laptops and smartphones,
-for Windows and Linux and other devices and Operating Systems. The other one is
-platform dependent, but it could be used for testing not only how the WebSockets
-behave in general, but also specific applications based on WebSockets.
+The first part of paper compares AJAX with WebSockets. It is then followed by
+a comparison of two WebSockets implementations based on \textit{Node.js}.
+Based on the comparison results, it proposes two different architectures for
+a testing platform capable of automating the testing process.
+One is independent
+of the underlying Operating System and present devices. It should work for
+both laptops and smartphones, for Windows and Linux and other devices and
+Operating Systems. The other one is platform dependent, but it could be used
+not only for testing how WebSockets behave in general, but also to assess
+the behaviour of specific applications which are based on WebSockets.
 \vfill\eject
 
 \section{Related work}
@@ -112,7 +115,7 @@ results were compared. The WebSockets server consumes 50\% less network
 bandwidth than the AJAX server. Also, the WebSockets client consumes memory at
 a constant rate, while the AJAX client consumes it at an increasing rate.
 Furthermore, the WebSockets-oriented implementation can send up to 215.44\%
-more data samples than the AJAX-based counterpart although demanding the same
+more data samples than the AJAX-based counterpart although it demands the same
 amount of network bandwidth.
 \\
 
@@ -268,22 +271,24 @@ WebSockets API requirements, etc.
 \\
 
 \subsection{The Platform-Dependent Alternative}
-Figure 6 shows the alternate architecture. Just as before we have a server
+Figure 6 shows the alternate architecture. Just as before, we have a server
 application and tests generator component that communicate directly. The tests
 generator creates stress tests based on a user defined input, similar to Unix
-commands. Similarly to first architecture, the tracer gathers information about
-the WebSockets behavior used by the server. But, while in the first case the
+commands. Similarly to the first architecture, the tracer gathers information
+about the WebSockets behavior while the target server is up and running.
+However, while in the first case the
 tracer is a separate component that can gather information independently from
 the server due to the generic API, in the current architecture the tracer is
-a library used by the server directly, similarly to look \cite{nodejs-look}.
-As a plus, this offers the possibility to use the tracer in other server
-applications that are not created only for testing WebSockets implementations
-in general, but also test the behavior of specific servers that might be used
-in production and are based on WebSockets. But this comes of the cost of
-portability. For every new programming language, OS or device, the platform
-dependent tool and server application need to be written from scratch. The
-tests generator doesn't suffer from this problem because it acts as a client
-for the server and it will always use the same protocol for communication.
+a library used by the server directly, similar to the Look \cite{nodejs-look}
+profiler. As a plus, this offers the possibility to use the tracer in other
+server applications that are not created only for testing WebSockets
+implementations in general, but also test the behavior of specific servers
+that might be used in production and are based on WebSockets.
+But this comes at the cost of portability.
+For every new programming language, OS or device, the platform
+dependent tool and server application need to be completely rewritten. The
+tests generator does not suffer from this problem because it acts as a client
+for the server and it will always make use of the same communication protocol.
 \begin{frame}{}
   \begin{figure}
     \centering
@@ -301,15 +306,15 @@ we were able to propose two possibilities of designing a framework capable of
 profiling existing web servers and evaluate the benefits of switching to the new 
 connection-oriented WebSockets protocol. One architecture promotes easy porting
 to new platforms and WebSockets implementations, with the downside that it will
-take initially more time to implement, and can be used only for generic testing.
+initially take more time to implement and can be used only for generic testing.
 The other is much more straight-forward, as its main purpose is to generate
-testing results as fast as possible and maybe be used by applications created
+testing results as fast as possible and maybe to be used by applications created
 for production, but it comes at the cost of harder porting to other platforms.
 \\
 
-As a future work, we can extend the comparative analysis to other WebSockets
-implementations, like \textbf{socket.io} \cite{socket.io}, \textbf{SockJS}
-\cite{SockJS} or \textbf{Engine.IO} \cite{Engine.IO}. This comparisons might
+As future work, we can extend the comparative analysis to other WebSockets
+implementations, such as \textbf{socket.io} \cite{socket.io}, \textbf{SockJS}
+\cite{SockJS} or \textbf{Engine.IO} \cite{Engine.IO}. These comparisons might
 give us better insights about which testing architecture we should choose and
 how we should implement it, or maybe create a better architecture.
 \\
