@@ -1,0 +1,82 @@
+\begin{thebibliography}{10}
+
+\bibitem{AJAX}
+Anthony~T. Holdener, III.
+\newblock {\em Ajax: The Definitive Guide}.
+\newblock O'Reilly, first edition, 2008.
+
+\bibitem{2009:Misc}
+Ian Hickson.
+\newblock '[hybi] web socket protocol in "last call" ', 2009.
+\newblock
+  \url{http://www.ietf.org/mail-archive/web/hybi/current/msg00784.html}.
+
+\bibitem{RFC}
+A.~Melnikov I.~Fette.
+\newblock The websocket protocol, 2011.
+\newblock \url{http://tools.ietf.org/html/rfc6455}.
+
+\bibitem{Autobahn}
+Autobahn, testsuite.
+\newblock \url{http://autobahn.ws/testsuite/}.
+
+\bibitem{RT-Monitoring}
+D.G. Puranik, D.C. Feiock, and J.H. Hill.
+\newblock Real-time monitoring using ajax and websockets.
+\newblock In {\em Engineering of Computer Based Systems (ECBS), 2013 20th IEEE
+  International Conference and Workshops on the}, pages 110--118, 2013.
+
+\bibitem{OASIS}
+J.~Hill, H.~Sutherland, P.~Stodinger, T.~Silveria, D.C. Schmidt, J.~Slaby, and
+  N.~Visnevski.
+\newblock Oasis: A service-oriented architecture for dynamic instrumentation of
+  enterprise distributed real-time and embedded systems.
+\newblock In {\em Object/Component/Service-Oriented Real-Time Distributed
+  Computing (ISORC), 2010 13th IEEE International Symposium on}, pages 10--17,
+  2010.
+
+\bibitem{Performance-Penalty}
+S.~Agarwal.
+\newblock Real-time web application roadblock: Performance penalty of html
+  sockets.
+\newblock In {\em Communications (ICC), 2012 IEEE International Conference on},
+  pages 1225--1229, 2012.
+
+\bibitem{nodejs}
+Node.js, 2009.
+\newblock \url{http://nodejs.org/}.
+
+\bibitem{nodejs-ws}
+Einar~Otto Stangvik.
+\newblock ws: a node.js websocket library, 2011.
+\newblock \url{http://github.com/einaros/ws}.
+
+\bibitem{nodejs-websocket}
+Websocket client and server implementation for node, 2011.
+\newblock \url{http://github.com/Worlize/WebSocket-Node}.
+
+\bibitem{nodejs-look}
+Vadim Baryshev.
+\newblock Look, 2012.
+\newblock \url{http://github.com/baryshev/look}.
+
+\bibitem{tests}
+Liviu~Chircu Mihail~Costea.
+\newblock Websockets implementation tests, 2013.
+\newblock \url{https://github.com/cmihail/WSvsHTTP/tree/master/tests}.
+
+\bibitem{socket.io}
+socket.io, 2010.
+\newblock \url{https://github.com/learnboost/socket.io}.
+
+\bibitem{SockJS}
+Marek, Serge~S. Kova, Matthew Sackman, Simon MacMullen, and Michael Bridgen.
+\newblock Sockjs - websocket emulation, 2011.
+\newblock \url{https://github.com/sockjs}.
+
+\bibitem{Engine.IO}
+Guillermo Rauch.
+\newblock Engine.io, 2011.
+\newblock \url{https://github.com/LearnBoost/engine.io}.
+
+\end{thebibliography}
